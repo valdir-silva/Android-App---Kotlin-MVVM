@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Events</string>
+
+    <!--  Events Activity  -->
+    <string name="events_title">Eventos</string>
+    <string name="events_error_401">Não autorizado</string>
+    <string name="events_error_400_generic">Erro não tratado</string>
+    <string name="events_error_500_generic">Erro catastrófico</string>
+
+    <!--  Event Details Activity  -->
+    <string name="event_details_title">Detalhes do Evento</string>
+    <string name="event_checkin_title">Check-In</string>
+    <string name="event_details_title_label">Título</string>
+    <string name="event_details_description_label">Descrição</string>
+    <string name="fab_content_desc">something</string>
+</resources>

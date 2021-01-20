@@ -80,7 +80,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:contentDescription="@string/fab_content_desc"
-        android:text="Check-in"
+        android:text="@string/chekIn"
         android:textColor="@color/white"
         app:icon="@drawable/ic_baseline_place_24"
         app:iconTint="@color/white"

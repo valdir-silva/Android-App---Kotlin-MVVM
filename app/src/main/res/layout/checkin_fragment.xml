@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:layout_marginTop="2dp"
             android:drawablePadding="10dp"
-            android:hint="Informe seu nome"
+            android:hint="@string/informeNome"
             app:layout_constraintBottom_toTopOf="@+id/fragmentEventCheckInEmailTv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
             android:id="@+id/textEmailCheckIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Informe seu email"
+            android:hint="@string/informeEmail"
             android:maxLines="1"
             android:inputType="text"
             android:scrollHorizontally="true"
@@ -59,7 +59,7 @@
             android:id="@+id/checkInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FAZER CHECK-IN"
+            android:text="@string/fazerCheckIn"
             android:textColor="@color/white" />
 
     </LinearLayout>

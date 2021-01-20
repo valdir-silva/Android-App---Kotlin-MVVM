@@ -13,4 +13,9 @@
     <string name="event_details_title_label">Título</string>
     <string name="event_details_description_label">Descrição</string>
     <string name="fab_content_desc">something</string>
+    <string name="informeEmail">Informe seu email</string>
+    <string name="fazerCheckIn">FAZER CHECK-IN</string>
+    <string name="informeNome">Informe seu nome</string>
+    <string name="chekIn">CHECK-IN</string>
+    <string name="fechar">FECHAR</string>
 </resources>

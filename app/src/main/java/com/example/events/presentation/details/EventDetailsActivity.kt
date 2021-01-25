@@ -55,14 +55,14 @@ class EventDetailsActivity : BaseActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.container, EventDetailsFragment.newInstance())
                         .commitNow()
-                    chekin_button.text = R.string.fechar.toString()
+                    chekin_button.text = resources.getText(R.string.fechar)
                     chekin_button.icon = getDrawable(R.drawable.ic_baseline_close_24)
                 }
                 true -> {
                     supportFragmentManager.beginTransaction()
                         .remove(eventDetailsFragment)
                         .commitNow()
-                    chekin_button.text = R.string.chekIn.toString()
+                    chekin_button.text = resources.getText(R.string.chekIn)
                     chekin_button.icon = getDrawable(R.drawable.ic_baseline_place_24)
                 }
             }

@@ -1,7 +1,9 @@
 package com.example.events.data.repository
 
-import com.example.events.data.ApiService
+import com.example.events.BuildConfig
 import com.example.events.data.ApiResults
+import com.example.events.data.ApiService
+import com.example.events.data.Service
 import com.example.events.data.model.Event
 import com.example.events.data.response.EventResponse
 import retrofit2.Call
@@ -10,8 +12,11 @@ import retrofit2.Response
 
 class EventsApiDataSource : EventsRepository {
 
+    val service: Service =
+        if (BuildConfig.BUILD_TYPE == "mock") ApiService.mockEndpoints else ApiService.apiEndpoints
+
     override fun getEvents(eventsResultCallback: (result: ApiResults) -> Unit) {
-        ApiService.service.getEvents().enqueue(object : Callback<List<EventResponse>> {
+        service.getEvents().enqueue(object : Callback<List<EventResponse>> {
             override fun onResponse(
                 call: Call<List<EventResponse>>,
                 response: Response<List<EventResponse>>
@@ -40,7 +45,7 @@ class EventsApiDataSource : EventsRepository {
     }
 
     override fun checkIn(checkInResultCallback: (result: ApiResults) -> Unit) {
-        ApiService.service.checkIn("1", "abc", "abc@abc.com").enqueue(object : Callback<Boolean> {
+        service.checkIn("1", "abc", "abc@abc.com").enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 when {
                     response.isSuccessful -> {

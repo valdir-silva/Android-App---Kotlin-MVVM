@@ -26,6 +26,16 @@ android {
         debug {
             buildConfigField("String", "SERVER_URL", '"https://5f5a8f24d44d640016169133.mockapi.io/api/"')
         }
+        mock {
+            debuggable true
+            buildConfigField("String", "SERVER_URL", '"https://5f5a8f24d44d640016169133.mockapi.io/api/"')
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -39,6 +49,8 @@ dependencies {
     implementation "android.arch.lifecycle:viewmodel:$rootProject.viewModelVersion"
 
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitVersion"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -60,4 +72,6 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 
+    //retromock
+    implementation 'co.infinum:retromock:1.1.1'
 }

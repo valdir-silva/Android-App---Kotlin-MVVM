@@ -8,8 +8,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.example.events.R
 import com.example.events.presentation.base.BaseActivity
+import com.example.events.presentation.checkIn.CheckInFragment
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.event_details_activity.*
@@ -47,23 +49,25 @@ class EventDetailsActivity : BaseActivity() {
     private fun registerListeners() {
         chekin_button.setOnClickListener {
 
-            val eventDetailsFragment: EventDetailsFragment? =
-                supportFragmentManager.findFragmentById(R.id.container) as EventDetailsFragment?
+            val checkInFragment: CheckInFragment? =
+                supportFragmentManager.findFragmentById(R.id.container) as CheckInFragment?
 
-            when (eventDetailsFragment?.isVisible) {
+            when (checkInFragment?.isVisible) {
                 null -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, EventDetailsFragment.newInstance())
+                        .replace(R.id.container, CheckInFragment.newInstance())
                         .commitNow()
                     chekin_button.text = resources.getText(R.string.fechar)
-                    chekin_button.icon = getDrawable(R.drawable.ic_baseline_close_24)
+                    chekin_button.icon =
+                        ContextCompat.getDrawable(this, R.drawable.ic_baseline_close_24)
                 }
                 true -> {
                     supportFragmentManager.beginTransaction()
-                        .remove(eventDetailsFragment)
+                        .remove(checkInFragment)
                         .commitNow()
                     chekin_button.text = resources.getText(R.string.chekIn)
-                    chekin_button.icon = getDrawable(R.drawable.ic_baseline_place_24)
+                    chekin_button.icon =
+                        ContextCompat.getDrawable(this, R.drawable.ic_baseline_place_24)
                 }
             }
         }

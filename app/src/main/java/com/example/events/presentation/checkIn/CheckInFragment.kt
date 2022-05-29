@@ -1,24 +1,24 @@
-package com.example.events.presentation.details
+package com.example.events.presentation.checkIn
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.events.R
 import com.example.events.data.repository.EventsApiDataSource
-import com.example.events.presentation.events.EventsViewModel
+import com.example.events.presentation.details.EventDetailsViewModel
 import kotlinx.android.synthetic.main.checkin_fragment.*
 
-class EventDetailsFragment : Fragment() {
+class CheckInFragment : Fragment() {
 
     companion object {
-        fun newInstance() = EventDetailsFragment()
+        fun newInstance() = CheckInFragment()
     }
 
-    private val viewModel: EventDetailsViewModel = EventDetailsViewModel.ViewModelFactory(EventsApiDataSource())
+    private val viewModel: EventDetailsViewModel = EventDetailsViewModel.ViewModelFactory(
+        EventsApiDataSource()
+    )
         .create(EventDetailsViewModel::class.java)
 
     override fun onCreateView(

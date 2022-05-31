@@ -3,7 +3,7 @@ package com.example.events.data.model
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class Event(
+data class EventModel(
 //    val people: People,
     val date: Long,
     val description: String,

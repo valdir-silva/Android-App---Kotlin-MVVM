@@ -5,20 +5,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.events.R
 import com.example.events.data.ApiResults
-import com.example.events.data.model.Event
+import com.example.events.data.model.EventModel
 import com.example.events.data.repository.EventsRepository
 import java.lang.IllegalArgumentException
 
 class EventDetailsViewModel (val dataSource: EventsRepository) : ViewModel() {
 
-    val checkInLiveData: MutableLiveData<List<Event>> = MutableLiveData()
+    val checkInLiveData: MutableLiveData<List<EventModel>> = MutableLiveData()
     val checkInFlipperLiveData: MutableLiveData<Pair<Int, Int?>> = MutableLiveData()
 
     fun checkIn() {
         dataSource.checkIn { result: ApiResults ->
             when (result) {
                 is ApiResults.Success -> {
-                    checkInLiveData.value = result.events
+                    checkInLiveData.value = result.eventModelList
                     checkInFlipperLiveData.value = Pair(VIEW_FLIPPER_EVENTS, null)
                 }
                 is ApiResults.ApiError -> {

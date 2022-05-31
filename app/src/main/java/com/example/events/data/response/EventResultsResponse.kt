@@ -1,6 +1,5 @@
 package com.example.events.data.response
 
-import com.example.events.data.model.Event
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

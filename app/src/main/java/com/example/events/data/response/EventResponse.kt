@@ -1,6 +1,6 @@
 package com.example.events.data.response
 
-import com.example.events.data.model.Event
+import com.example.events.data.model.EventModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -25,7 +25,7 @@ class EventResponse(
     @Json(name = "id")
     val id: String,
 ) {
-    fun getEventModel() = Event(
+    fun getEventModel() = EventModel(
 //        people = this.people
         date = this.date,
         description = this.description,

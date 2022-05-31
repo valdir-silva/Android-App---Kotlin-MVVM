@@ -1,7 +1,6 @@
 package com.example.events.presentation.events
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.events.R
@@ -21,32 +20,32 @@ class EventsActivity : BaseActivity() {
         val viewModel: EventsViewModel = EventsViewModel.ViewModelFactory(EventsApiDataSource())
             .create(EventsViewModel::class.java)
 
-        viewModel.eventsLiveData.observe(this, Observer {
-            it?.let { events ->
+        viewModel.eventModelListLiveData.observe(this) { eventModelList ->
+            eventModelList?.let { events ->
                 with(recycleEvents) {
                     layoutManager =
                         LinearLayoutManager(this@EventsActivity, RecyclerView.VERTICAL, false)
                     setHasFixedSize(true)
                     adapter = EventsAdapter(events) { event ->
                         EventDetailsActivity.getStatIntent(
-                            this@EventsActivity,
-                            event.image,
-                            event.title,
-                            event.getFormatedDate(),
-                            event.price,
-                            event.description
+                            context = this@EventsActivity,
+                            image = event.image,
+                            title = event.title,
+                            date = event.getFormatedDate(),
+                            price = event.price,
+                            description = event.description
                         )
                     }
                 }
             }
-        })
+        }
 
-        viewModel.viewFlipperLiveData.observe(this, Observer { viewFlipper ->
+        viewModel.viewFlipperLiveData.observe(this) { viewFlipper ->
             viewFlipperEvents.displayedChild = viewFlipper.first
             viewFlipper.second?.let { errorMessageResId ->
                 textViewError.text = getString(errorMessageResId)
             }
-        })
+        }
 
         viewModel.getEvents()
     }

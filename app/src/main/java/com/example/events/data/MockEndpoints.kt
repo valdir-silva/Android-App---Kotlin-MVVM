@@ -16,7 +16,7 @@ interface MockEndpoints : Service {
     @GET("/")
     override fun getEvents(): Call<List<EventResponse>>
 
-    @Mock()
+    @Mock
     @FormUrlEncoded
     @POST("/")
     override fun checkIn(

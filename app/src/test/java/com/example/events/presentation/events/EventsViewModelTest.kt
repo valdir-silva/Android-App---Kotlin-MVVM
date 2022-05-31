@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.events.R
 import com.example.events.data.ApiResults
-import com.example.events.data.model.Event
+import com.example.events.data.model.EventModel
 import com.example.events.data.repository.EventsRepository
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Rule
@@ -20,7 +20,7 @@ class EventsViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var eventsLiveDataObserver: Observer<List<Event>>
+    private lateinit var eventsLiveDataObserver: Observer<List<EventModel>>
 
     @Mock
     private lateinit var viewFlipperLiveDataObserver: Observer<Pair<Int, Int?>>
@@ -31,11 +31,11 @@ class EventsViewModelTest {
     fun `when view model getEvents get success then sets eventsLiveData`() {
         // Arrange
         val events = listOf(
-            Event(1534784400, "description 1", "http...", 1F, "Title 1")
+            EventModel(1534784400, "description 1", "http...", 1F, "Title 1")
         )
         val resultSuccess = MockRepository(ApiResults.Success(events))
         viewModel = EventsViewModel(resultSuccess)
-        viewModel.eventsLiveData.observeForever(eventsLiveDataObserver)
+        viewModel.eventModelListLiveData.observeForever(eventsLiveDataObserver)
         viewModel.viewFlipperLiveData.observeForever(viewFlipperLiveDataObserver)
 
         // Act

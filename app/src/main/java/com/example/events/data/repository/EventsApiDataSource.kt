@@ -4,7 +4,7 @@ import com.example.events.BuildConfig
 import com.example.events.data.ApiResults
 import com.example.events.data.ApiService
 import com.example.events.data.Service
-import com.example.events.data.model.Event
+import com.example.events.data.model.EventModel
 import com.example.events.data.response.EventResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,16 +23,16 @@ class EventsApiDataSource : EventsRepository {
             ) {
                 when {
                     response.isSuccessful -> {
-                        val events: MutableList<Event> = mutableListOf()
+                        val eventModelList: MutableList<EventModel> = mutableListOf()
 
                         response.body()?.let { eventBodyResponse ->
                             for (result in eventBodyResponse) {
-                                val event = result.getEventModel()
-                                events.add(event)
+                                val eventModel = result.getEventModel()
+                                eventModelList.add(eventModel)
                             }
                         }
 
-                        eventsResultCallback(ApiResults.Success(events))
+                        eventsResultCallback(ApiResults.Success(eventModelList))
                     }
                     else -> eventsResultCallback(ApiResults.ApiError(response.code()))
                 }
@@ -49,7 +49,7 @@ class EventsApiDataSource : EventsRepository {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 when {
                     response.isSuccessful -> {
-                        val result: MutableList<Event> = mutableListOf()
+                        val result: MutableList<EventModel> = mutableListOf()
                     }
                     else -> checkInResultCallback(ApiResults.ApiError(response.code()))
                 }

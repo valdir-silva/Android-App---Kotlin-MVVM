@@ -102,21 +102,21 @@ class EventDetailsActivity : BaseActivity() {
         private const val EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION"
 
         fun getStatIntent(
-            contex: Context,
+            context: Context,
             image: String,
             title: String,
             date: String,
             price: Float,
             description: String
         ) {
-            val intent = Intent(contex, EventDetailsActivity::class.java).apply {
+            val intent = Intent(context, EventDetailsActivity::class.java).apply {
                 putExtra(EXTRA_IMAGE, image)
                 putExtra(EXTRA_TITLE, title)
                 putExtra(EXTRA_DATE, date)
                 putExtra(EXTRA_PRICE, price.toString())
                 putExtra(EXTRA_DESCRIPTION, description)
             }
-            contex.startActivity(intent)
+            context.startActivity(intent)
         }
     }
 }

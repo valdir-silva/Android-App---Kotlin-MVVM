@@ -5,50 +5,59 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.events.R
 import com.example.events.data.ApiResults
-import com.example.events.data.model.EventModel
+import com.example.events.data.model.EventRequest
 import com.example.events.data.repository.EventsRepository
-import java.lang.IllegalArgumentException
+import com.example.events.utils.toLiveData
 
-class EventDetailsViewModel (val dataSource: EventsRepository) : ViewModel() {
+class EventDetailsViewModel(eventId: String, val dataSource: EventsRepository) :
+    ViewModel() {
 
-    val checkInLiveData: MutableLiveData<List<EventModel>> = MutableLiveData()
-    val checkInFlipperLiveData: MutableLiveData<Pair<Int, Int?>> = MutableLiveData()
+    private val _event: MutableLiveData<String> = MutableLiveData(eventId)
 
-    fun checkIn() {
-        dataSource.checkIn { result: ApiResults ->
+    private val _checkInResponseCodeLiveData: MutableLiveData<Pair<Int, Int?>> = MutableLiveData()
+    val checkInResponseCodeLiveData = _checkInResponseCodeLiveData.toLiveData()
+
+    fun checkIn(name: String, email: String) {
+        dataSource.checkIn(
+            EventRequest(
+                _event.value.orEmpty(),
+                name,
+                email
+            )
+        ) { result: ApiResults ->
             when (result) {
                 is ApiResults.Success -> {
-                    checkInLiveData.value = result.eventModelList
-                    checkInFlipperLiveData.value = Pair(VIEW_FLIPPER_EVENTS, null)
+                    _checkInResponseCodeLiveData.value = Pair(CHECK_IN_SUCCESS, null)
                 }
                 is ApiResults.ApiError -> {
                     if (result.statusCode == 401) {
-                        checkInFlipperLiveData.value =
-                            Pair(VIEW_FLIPPER_ERROR, R.string.events_error_401)
+                        _checkInResponseCodeLiveData.value =
+                            Pair(CHECK_IN_ERROR, R.string.events_error_401)
                     } else {
-                        checkInFlipperLiveData.value =
-                            Pair(VIEW_FLIPPER_ERROR, R.string.events_error_400_generic)
+                        _checkInResponseCodeLiveData.value =
+                            Pair(CHECK_IN_ERROR, R.string.events_error_400_generic)
                     }
                 }
                 is ApiResults.ServerError -> {
-                    checkInFlipperLiveData.value =
-                        Pair(VIEW_FLIPPER_ERROR, R.string.events_error_500_generic)
+                    _checkInResponseCodeLiveData.value =
+                        Pair(CHECK_IN_ERROR, R.string.events_error_500_generic)
                 }
             }
         }
     }
 
-    class ViewModelFactory(val dataSource: EventsRepository) : ViewModelProvider.Factory {
+    class ViewModelFactory(val eventId: String, val dataSource: EventsRepository) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(EventDetailsViewModel::class.java)) {
-                return EventDetailsViewModel(dataSource) as T
+                return EventDetailsViewModel(eventId = eventId, dataSource = dataSource) as T
             }
             throw IllegalArgumentException("Unknow ViewModel class")
         }
     }
 
     companion object {
-        private const val VIEW_FLIPPER_EVENTS = 1
-        private const val VIEW_FLIPPER_ERROR = 2
+        private const val CHECK_IN_SUCCESS = 1
+        private const val CHECK_IN_ERROR = 2
     }
 }

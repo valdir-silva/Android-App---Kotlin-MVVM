@@ -39,7 +39,7 @@ class EventDetailsActivity : BaseActivity() {
             })
         eventDetailsTitle.text = intent.getStringExtra(EXTRA_TITLE)
         eventDetailsDate.text = intent.getStringExtra(EXTRA_DATE)
-        eventDetailsPrice.text = "R$ " + intent.getStringExtra(EXTRA_PRICE)
+        eventDetailsPrice.text = "R$ ${intent.getStringExtra(EXTRA_PRICE)}"
         eventDetailsDescription.text = intent.getStringExtra(EXTRA_DESCRIPTION)
 
         registerListeners()

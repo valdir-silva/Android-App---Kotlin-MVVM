@@ -4,8 +4,8 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.events.R
 import com.example.events.data.model.EventModel
 import com.squareup.picasso.Callback
@@ -50,7 +50,7 @@ class EventsAdapter(
                 })
             itemView.textTitle.text = eventModel.title
             itemView.textDate.text = eventModel.getFormatedDate()
-            itemView.textPrice.text = "R$ " + eventModel.price.toString()
+            itemView.textPrice.text = "R$ ${eventModel.price}"
 
             itemView.setOnClickListener {
                 onItemClickListener.invoke(eventModel)

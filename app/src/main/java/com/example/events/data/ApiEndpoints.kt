@@ -18,7 +18,5 @@ interface ApiEndpoints : Service {
         @Field("eventId") eventId: String?,
         @Field("name") name: String,
         @Field("email") email: String
-    ): Call<Boolean>
-
-//    fun checkIn(@Body checkin: Checkin): Call<EventApiResult>
+    ): Call<Map<String, String>>
 }

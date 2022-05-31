@@ -4,34 +4,36 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.events.R
-import com.example.events.data.*
+import com.example.events.data.ApiResults
 import com.example.events.data.model.EventModel
 import com.example.events.data.repository.EventsRepository
-import java.lang.IllegalArgumentException
+import com.example.events.utils.toLiveData
 
 class EventsViewModel(val dataSource: EventsRepository) : ViewModel() {
 
-    val eventModelListLiveData: MutableLiveData<List<EventModel>> = MutableLiveData()
-    val viewFlipperLiveData: MutableLiveData<Pair<Int, Int?>> = MutableLiveData()
+    private val _eventModelListLiveData: MutableLiveData<List<EventModel>> = MutableLiveData()
+    val eventModelListLiveData = _eventModelListLiveData.toLiveData()
+    private val _viewFlipperLiveData: MutableLiveData<Pair<Int, Int?>> = MutableLiveData()
+    val viewFlipperLiveData = _viewFlipperLiveData.toLiveData()
 
     fun getEvents() {
         dataSource.getEvents { result: ApiResults ->
             when (result) {
                 is ApiResults.Success -> {
-                    eventModelListLiveData.value = result.eventModelList
-                    viewFlipperLiveData.value = Pair(VIEW_FLIPPER_EVENTS, null)
+                    _eventModelListLiveData.value = result.eventModelList
+                    _viewFlipperLiveData.value = Pair(VIEW_FLIPPER_EVENTS, null)
                 }
                 is ApiResults.ApiError -> {
                     if (result.statusCode == 401) {
-                        viewFlipperLiveData.value =
+                        _viewFlipperLiveData.value =
                             Pair(VIEW_FLIPPER_ERROR, R.string.events_error_401)
                     } else {
-                        viewFlipperLiveData.value =
+                        _viewFlipperLiveData.value =
                             Pair(VIEW_FLIPPER_ERROR, R.string.events_error_400_generic)
                     }
                 }
                 is ApiResults.ServerError -> {
-                    viewFlipperLiveData.value =
+                    _viewFlipperLiveData.value =
                         Pair(VIEW_FLIPPER_ERROR, R.string.events_error_500_generic)
                 }
             }

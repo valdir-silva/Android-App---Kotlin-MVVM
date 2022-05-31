@@ -16,6 +16,7 @@ interface MockEndpoints : Service {
     @GET("/")
     override fun getEvents(): Call<List<EventResponse>>
 
+    @MockResponse(body = "checkin.json")
     @Mock
     @FormUrlEncoded
     @POST("/")
@@ -23,7 +24,7 @@ interface MockEndpoints : Service {
         @Field("eventId") eventId: String?,
         @Field("name") name: String,
         @Field("email") email: String
-    ): Call<Boolean>
+    ): Call<Map<String, String>>
 
 //    fun checkIn(@Body checkin: Checkin): Call<EventApiResult>
 }

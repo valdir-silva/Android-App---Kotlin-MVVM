@@ -5,6 +5,7 @@ import com.example.events.data.ApiResults
 import com.example.events.data.ApiService
 import com.example.events.data.Service
 import com.example.events.data.model.EventModel
+import com.example.events.data.model.EventRequest
 import com.example.events.data.response.EventResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,22 +45,30 @@ class EventsApiDataSource : EventsRepository {
         })
     }
 
-    override fun checkIn(checkInResultCallback: (result: ApiResults) -> Unit) {
-        service.checkIn("1", "abc", "abc@abc.com").enqueue(object : Callback<Boolean> {
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                when {
-                    response.isSuccessful -> {
-                        val result: MutableList<EventModel> = mutableListOf()
+    override fun checkIn(
+        eventRequest: EventRequest,
+        checkInResultCallback: (result: ApiResults) -> Unit
+    ) {
+        service.checkIn(eventRequest.eventId, eventRequest.name, eventRequest.email)
+            .enqueue(object : Callback<Map<String, String>> {
+                override fun onResponse(
+                    call: Call<Map<String, String>>,
+                    response: Response<Map<String, String>>
+                ) {
+                    when {
+                        response.isSuccessful -> {
+                            // TODO Melhorar abstracao do Success ou já mudar tudo para coroutines
+                            checkInResultCallback(ApiResults.Success(listOf()))
+                        }
+                        else -> checkInResultCallback(ApiResults.ApiError(response.code()))
                     }
-                    else -> checkInResultCallback(ApiResults.ApiError(response.code()))
                 }
-            }
 
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                checkInResultCallback(ApiResults.ServerError)
-            }
+                override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
+                    checkInResultCallback(ApiResults.ServerError)
+                }
 
-        })
+            })
     }
 
 }

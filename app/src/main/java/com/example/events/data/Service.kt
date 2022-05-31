@@ -12,5 +12,5 @@ interface Service {
         @Field("eventId") eventId: String? = null,
         @Field("name") name: String,
         @Field("email") email: String
-    ): Call<Boolean>
+    ): Call<Map<String, String>>
 }

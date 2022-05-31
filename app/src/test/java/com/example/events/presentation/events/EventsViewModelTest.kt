@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.example.events.R
 import com.example.events.data.ApiResults
 import com.example.events.data.model.EventModel
+import com.example.events.data.model.EventRequest
 import com.example.events.data.repository.EventsRepository
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Rule
@@ -31,7 +32,7 @@ class EventsViewModelTest {
     fun `when view model getEvents get success then sets eventsLiveData`() {
         // Arrange
         val events = listOf(
-            EventModel(1534784400, "description 1", "http...", 1F, "Title 1")
+            EventModel(1534784400, "dummyDescription", "http...", 1F, "dummyTitle")
         )
         val resultSuccess = MockRepository(ApiResults.Success(events))
         viewModel = EventsViewModel(resultSuccess)
@@ -80,7 +81,10 @@ class MockRepository(private val result: ApiResults) : EventsRepository {
         eventsResultCallback(result)
     }
 
-    override fun checkIn(checkInResultCallback: (result: ApiResults) -> Unit) {
+    override fun checkIn(
+        eventRequest: EventRequest,
+        checkInResultCallback: (result: ApiResults) -> Unit
+    ) {
         TODO("Not yet implemented")
     }
 }

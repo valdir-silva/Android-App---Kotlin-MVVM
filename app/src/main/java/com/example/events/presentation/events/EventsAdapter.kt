@@ -6,59 +6,54 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.events.R
-import com.example.events.data.model.Event
+import com.example.events.data.model.EventModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_event.view.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 class EventsAdapter(
-    private val events: List<Event>,
-    val onItemClickListener: ((event: Event) -> Unit)
+    private val eventModelList: List<EventModel>,
+    private val onItemClickListener: ((event: EventModel) -> Unit)
 ) : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): EventsViewHolder {
-        val itemView =
+        val eventItemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
-        return EventsViewHolder(itemView, onItemClickListener)
+        return EventsViewHolder(eventItemView, onItemClickListener)
     }
 
     override fun onBindViewHolder(viewHolder: EventsViewHolder, position: Int) {
-        viewHolder.bindView(events[position])
+        viewHolder.bindView(eventModelList[position])
     }
 
-    override fun getItemCount() = events.count()
+    override fun getItemCount() = eventModelList.count()
 
-    class EventsViewHolder(itemView: View, val onItemClickListener: ((event: Event) -> Unit)) :
-        RecyclerView.ViewHolder(itemView) {
+    class EventsViewHolder(
+        eventItemView: View,
+        private val onItemClickListener: ((event: EventModel) -> Unit)
+    ) :
+        RecyclerView.ViewHolder(eventItemView) {
 
-        private val image = itemView.imageEvent
-        private val title = itemView.textTitle
-        private val date = itemView.textDate
-        private val price = itemView.textPrice
-
-        fun bindView(event: Event) {
+        fun bindView(eventModel: EventModel) {
             Picasso.get()
-                .load(event.image)
-                .into(image, object : Callback {
+                .load(eventModel.image)
+                .into(itemView.imageEvent, object : Callback {
                     override fun onSuccess() {
                         Log.d(TAG, "success")
                     }
+
                     override fun onError(e: Exception?) {
-                        image.setImageResource(R.drawable.default_image)
+                        itemView.imageEvent.setImageResource(R.drawable.default_image)
                         Log.d(TAG, "error: " + e?.message)
                     }
                 })
-            title.text = event.title
-            date.text = event.getFormatedDate()
-            price.text = "R$ " + event.price.toString()
+            itemView.textTitle.text = eventModel.title
+            itemView.textDate.text = eventModel.getFormatedDate()
+            itemView.textPrice.text = "R$ " + eventModel.price.toString()
 
             itemView.setOnClickListener {
-                onItemClickListener.invoke(event)
+                onItemClickListener.invoke(eventModel)
             }
         }
     }
